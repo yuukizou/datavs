@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<head>
+    <title>Individual Assignment</title>
+    <meta charset="utf-8">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/3.0.8/vega.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/2.0.4/vega-lite.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/3.0.0-rc7/vega-embed.js"></script>
+
+    <!--uncomment if you decide to use advanced tooltips-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-tooltip/0.4.4/vega-tooltip.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/vega-tooltip/0.4.4/vega-tooltip.css">
+    <!--d3 and jquery might be helpful if you want to load data only once-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <style media="screen">
+        /* Add space between Vega-Embed links  */
+        .vega-actions a {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Container for the visualization -->
+<div id="chart1"></div>
+<div id="chart2"></div>
+<div id="chart3"></div>
+<div id="chart4"></div>
+<div id="chart5"></div>
+<div id="chart5_1"></div>
+<div id="chart5_2"></div>
+<div id="chart6"></div>
+
+
+<script>
+var opt = {"renderer": "svg", mode: "vega-lite"};
+    var width = 500;
+
+    //chart 1
+    var spec1 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+    "title": "Antibiotics Effect per Bacteria",
+  "data": {
+    "url": "a1-burtin.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+
+  "hconcat":[
+  {
+    "width": 250,
+    "height": 400,
+  "layer":[
+    {
+    "mark" : "bar",
+  "encoding": {
+    "y": {
+        "field": "Bacteria ",
+        "type": "nominal"
+
+    },
+    "x":{
+        "field": "Penicilin",
+        "type": "quantitative",
+    },
+    "color":{
+        "field": "Gram Staining ", "type": "ordinal"
+    },
+  }
+},
+    {
+    "mark": {
+        "type": "text",
+        "align": "middle",
+        "dx": 4,
+        "dy": 3
+},
+    "encoding": {
+      "y": {"field": "Bacteria ", "type": "nominal"},
+      "x": {"field": "Penicilin", "type": "quantitative"},
+      "text": {"field": "Penicilin", "type": "quantitative"},
+      "color": {
+        "value": "#1e2e40"
+      }
+    }
+  }
+  ],
+},
+
+    {
+    "width": 250,
+    "height": 400,
+  "layer":[
+    {
+    "mark" : "bar",
+  "encoding": {
+    "y": {
+                "field": "Bacteria ",
+        "type": "nominal"
+
+    },
+    "x":{
+        "field": "Streptomycin",
+        "type": "quantitative",
+    },
+    "color":{
+        "field": "Gram Staining ", "type": "ordinal"
+    },
+  }
+},
+    {
+    "mark": {
+        "type": "text",
+        "align": "middle",
+        "dx": 4,
+        "dy": 3
+},
+    "encoding": {
+      "y": {"field": "Bacteria ", "type": "nominal"},
+      "x": {"field": "Streptomycin", "type": "quantitative"},
+      "text": {"field": "Streptomycin", "type": "quantitative"},
+      "color": {
+        "value": "#1e2e40"
+      }
+    }
+  }
+  ],
+},
+    {
+    "width": 250,
+    "height": 400,
+  "layer":[
+    {
+    "mark" : "bar",
+  "encoding": {
+    "y": {
+        "field": "Bacteria ",
+        "type": "nominal",
+        "sort": {
+            "op": "mean",
+           "order": "descending",
+           "field": "Neomycin"
+        }
+    },
+    "x":{
+        "aggregate":"mean",
+        "field": "Neomycin",
+        "type": "quantitative",
+    },
+    "color":{
+        "field": "Gram Staining ", "type": "ordinal"
+    },
+  }
+},
+    {
+    "mark": {
+        "type": "text",
+        "align": "middle",
+        "dx": 4,
+        "dy": 3
+},
+    "encoding": {
+      "y": {"field": "Bacteria ", "type": "nominal",     
+      "sort": {
+            "op":"mean",
+           "field": "Neomycin",
+           "order": "descending"
+        }
+    },
+      "x": 
+      { "aggregate": "mean", "field": "Neomycin", "type": "quantitative"},
+      "text": {"op":"mean", "field": "Neomycin", "type": "quantitative"},
+      "color": {
+        "value": "#1e2e40"
+      }
+    }
+  }
+  ],
+}
+  ]
+}
+vegaEmbed("#chart1", spec1, opt)
+
+
+
+
+//************************Chart 2 ****************************
+var spec2 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+  "title": "Antibiotics Usage for Negative and Postive Gram Staining",
+  "data": {
+    "url": "a1-burtin.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "vconcat":[{
+  "layer": [
+  {
+    width: 700,
+        height: 80,
+    "mark" : "rect",
+  "encoding": {
+    "y":{
+        "field": "Gram Staining ",
+        "type": "nominal"
+    },
+    "x":{
+        "aggregate": "mean",
+        "field" : "Streptomycin",
+        "type":"quantitative",
+    },
+            "color":{
+        "aggregate": "mean", "field":"Streptomycin"},
+        "opacity": {"value": 0.3}
+    }
+  },
+  {
+    width: 700,
+        height: 80,
+    "mark" : "circle",
+  "encoding": {
+    "y":{
+        "field": "Gram Staining ",
+        "type": "nominal",
+    },
+    "x":{
+        "field" : "Streptomycin",
+        "type":"quantitative"
+    },
+    "color":{
+        "field":"Streptomycin", 
+        "type":"quantitative",
+        "scale":{"range":["#F28E77", "#F0522D", "#702615"]}}
+  }
+}
+  ]},
+  {  
+  //layer 2
+    "layer": [
+  {
+    width: 700,
+    height: 80,
+    "mark":{
+        "type":"rect"
+
+    },
+  "encoding": {
+    "y":{
+        "field": "Gram Staining ",
+        "type": "nominal"
+    },
+    "x":{
+        "aggregate": "mean",
+        "field" : "Penicilin",
+        "type":"quantitative",
+    },
+        "color":{
+        "aggregate": "mean", "field":"Penicilin","type":"nominal"
+    },
+    "opacity":{"value":"0.3"}
+  },
+},
+  {
+    width: 700,
+    height: 80,
+    "mark" : "circle",
+  "encoding": {
+    "y":{
+        "field": "Gram Staining ",
+        "type": "nominal",
+    },
+    "x":{
+        "field" : "Penicilin",
+        "type":"quantitative"
+    },
+    "color":{"field":"Penicilin", 
+    "type":"quantitative",
+        "scale":{"range":["#F28E77", "#F0522D", "#702615"]}}
+  },
+    "config":{
+"circle": {
+    "size": 20,
+    }
+}},
+//     {
+//     "mark": {
+//         "type": "text",
+//         "align": "middle",
+//         "dx": 4,
+//         "dy": 3
+// },
+//     "encoding": {
+//       "y": {"field": "Gram Staining ", "type": "nominal"},
+//       "x": {"aggregate":"mean", "field": "Penicilin", "type": "quantitative"},
+//       "text": {"aggregate":"mean", "field": "Penicilin", "type": "quantitative"},
+//       "color": {
+//         "value": "#1e2e40"
+//       }
+//     }
+//   }
+  ]
+},
+{ 
+    "layer": [
+  {
+    width: 700,
+    height: 80,
+    "mark" : "bar",
+  "encoding": {
+    "y":{
+        "field": "Gram Staining ",
+        "type": "nominal"
+    },
+    "x":{
+        "aggregate": "mean",
+        "field" : "Neomycin",
+        "type":"quantitative",
+    },
+    "color":{
+        "aggregate": "mean", "field":"Neomycin"
+    },
+    "opacity": {"value": 0.3}
+  }
+},
+  {
+    width: 700,
+        height: 80,
+    "mark" : "circle",
+  "encoding": {
+    "y":{
+        "field": "Gram Staining ",
+        "type": "nominal",
+    },
+    "x":{
+        "field" : "Neomycin",
+        "type":"quantitative"
+    },
+    "color":{"field":"Neomycin", "type":"quantitative", "scale":{"range":["#F28E77", "#F0522D", "#702615"]}}
+  }
+}
+  ]
+}]
+}
+vegaEmbed("#chart2", spec2, opt)
+
+
+
+
+// ************************** Chart 3 ********************************
+
+    var spec3 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+      "title": "Antibiotics and Their Most Effective Bacteria",
+    "width": 1000,
+    "height": 400,
+  "repeat": {
+    "column": [
+      "Penicilin",
+      "Streptomycin",
+      "Neomycin"
+    ]
+  },
+  "spec":{
+"data": {
+    "url": "a1-burtin.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "width": 250,
+  "height": 400,
+  "mark":"bar",
+  "encoding":{
+    "y":{
+        "field": "Bacteria ",
+        "type": "nominal",
+        "sort":{
+            "op":"mean",
+            "order":"descending",
+            "field":{
+                "repeat":"column"
+            }
+        }
+    },
+    "x":{
+        "aggregate":"mean",
+        "field":{
+            "repeat":"column"
+        },
+        "type": "quantitative",
+    },
+    "color":{
+        "field":"Gram Staining ", "type":"ordinal"
+    },
+     "tooltip": 
+     {"field": 
+     {"repeat":"column"
+     }, "type": "quantitative"}
+  }
+  }
+}
+vegaEmbed("#chart3", spec3, opt)
+
+//chart 4
+var spec4 = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+      "title": "Top 3 Postive Gram Staining Bacteria for Penicilin ",
+    "width": 800,
+    "height": 300,
+  "autosize": {
+    "type": "fit",
+  },
+  "data": {
+    "url": "a1-burtin.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform":[{
+    "filter":{
+        "field": "Gram Staining ", "oneOf":["positive"]
+    }
+  }
+  ],
+  "mark":"bar",
+  "encoding":{
+    "y":{
+        "field":"Bacteria ",
+        "type":"nominal",
+        "sort":{
+            "order":"descending",
+            "op":"mean",
+            "field":"Penicilin"
+        }
+    },
+    "x":{
+        "aggregate":"mean",
+        "field":"Penicilin",
+        "type":"quantitative"
+    },
+    "color":{
+        "field":"Gram Staining ", "scale":{"range":["#0c3269"]}
+    },
+    "tooltip":{
+        "field":"Penicilin"
+    }
+  }
+}
+
+vegaEmbed("#chart4", spec4, opt)
+
+//**********Chart 5**********************
+//     var spec5 = {
+//   "$schema": "https://vega.github.io/schema/vega-lite/v2.json",
+//       "title": "Antibiotics and Their Most Effective Bacteria",
+//     "width": 1000,
+//     "height": 400,
+//   "data": {
+//     "url": "a1-burtin.csv",
+//     "format": {
+//       "type": "csv"
+//     }
+//   },
+// "selection":{
+//     "grid":{
+//         "type":"interval",
+//         "bind":"scales",
+//         "on": "[mousedown, window:mouseup] > window:mousemove!",
+//       "encodings": [
+//         "x",
+//         "y"
+//       ],
+//       "translate":"[mousedown, window:mouseup] > window:mousemove!",
+//       "zoom": "wheel!",
+//       "mark": {
+//         "fill": "#333",
+//         "fillOpacity": 0.125,
+//         "stroke": "white"
+//       },
+//       "resolve": "global"
+//     }
+//   },
+//   "mark": "point",
+//   "encoding":{
+//     "y":{ "field":"Bacteria ",
+//         "type":"nominal","sort":{
+//             "order":"descending",
+//             "op":"mean",
+//             "field":"Penicilin"
+//         }},
+//      "x":{
+//         "aggregate":"mean",
+//         "field":"Penicilin",
+//         "type":"quantitative"
+//     }
+//   }
+// }
+// vegaEmbed("#chart5", spec5, opt)
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

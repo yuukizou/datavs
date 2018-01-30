@@ -260,9 +260,9 @@ var spec2 = {
         "type":"quantitative",
     },
         "color":{
-        "aggregate": "mean", "field":"Penicilin","type":"nominal"
+        "aggregate": "mean", "field":"Penicilin","scale":{"range":["#FCDABE", "#BCC9D9"]}
     },
-    "opacity":{"value":"0.3"}
+    "opacity":{"value":"0.8"}
   },
 },
   {
@@ -287,22 +287,6 @@ var spec2 = {
     "size": 20,
     }
 }},
-//     {
-//     "mark": {
-//         "type": "text",
-//         "align": "middle",
-//         "dx": 4,
-//         "dy": 3
-// },
-//     "encoding": {
-//       "y": {"field": "Gram Staining ", "type": "nominal"},
-//       "x": {"aggregate":"mean", "field": "Penicilin", "type": "quantitative"},
-//       "text": {"aggregate":"mean", "field": "Penicilin", "type": "quantitative"},
-//       "color": {
-//         "value": "#1e2e40"
-//       }
-//     }
-//   }
   ]
 },
 { 
@@ -310,7 +294,7 @@ var spec2 = {
   {
     width: 700,
     height: 80,
-    "mark" : "bar",
+    "mark" : "rect",
   "encoding": {
     "y":{
         "field": "Gram Staining ",
@@ -322,8 +306,7 @@ var spec2 = {
         "type":"quantitative",
     },
     "color":{
-        "aggregate": "mean", "field":"Neomycin"
-    },
+        "aggregate": "mean", "field":"Neomycin", "type":"nominal"},
     "opacity": {"value": 0.3}
   }
 },
@@ -347,8 +330,6 @@ var spec2 = {
 }]
 }
 vegaEmbed("#chart4", spec2, opt)
-
-
 
 
 // ************************** Chart 3 ********************************
